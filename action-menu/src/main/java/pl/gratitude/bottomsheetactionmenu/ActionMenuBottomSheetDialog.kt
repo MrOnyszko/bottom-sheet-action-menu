@@ -7,7 +7,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import kotlinx.android.synthetic.main.bottom_sheet_dialog_menu_action.*
+import android.widget.TextView
 
 open class ActionMenuBottomSheetDialog<ActionItemId> :
     BottomSheetDialogFragment() {
@@ -32,12 +32,18 @@ open class ActionMenuBottomSheetDialog<ActionItemId> :
 
     open var title: String? = null
 
+    open lateinit var menuActionRecyclerView: RecyclerView
+
+    open lateinit var menuActionHeaderTitle: TextView
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(layout, container, false);
+        return inflater.inflate(layout, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        menuActionRecyclerView = view.findViewById(R.id.menu_action_recycle_view)
+        menuActionHeaderTitle = view.findViewById(R.id.menu_action_header)
         setupRecycler()
         setupTitle()
     }
@@ -45,15 +51,15 @@ open class ActionMenuBottomSheetDialog<ActionItemId> :
     open fun setupRecycler() {
         adapter.actions = actions
         adapter.listener = listener
-        menu_action_recycle_view.adapter = adapter
-        menu_action_recycle_view.layoutManager = layoutManager
+        menuActionRecyclerView.adapter = adapter
+        menuActionRecyclerView.layoutManager = layoutManager
     }
 
     open fun setupTitle() {
-        menu_action_header.visibility = View.GONE
+        menuActionHeaderTitle.visibility = View.GONE
         title?.let {
-            menu_action_header.visibility = View.VISIBLE
-            menu_action_header.text = title
+            menuActionHeaderTitle.visibility = View.VISIBLE
+            menuActionHeaderTitle.text = title
         }
     }
 
