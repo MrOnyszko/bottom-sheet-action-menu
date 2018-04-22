@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import kotlinx.android.synthetic.main.recycler_holder_avatar_one_line_item.view.*
 
 open class ActionMenuRecyclerViewAdapter<ActionItemId>(
     open var layout: Int = R.layout.recycler_holder_avatar_one_line_item,
@@ -34,8 +33,8 @@ open class ActionMenuRecyclerViewAdapter<ActionItemId>(
 
     open inner class ActionMenuItemViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
-        open val avatar: ImageView = view.recycler_holder_avatar_one_line_item_avatar
-        open val title: TextView = view.recycler_holder_avatar_one_line_item_title
+        open val avatar: ImageView = view.findViewById(R.id.recycler_holder_avatar_one_line_item_avatar)
+        open val title: TextView = view.findViewById(R.id.recycler_holder_avatar_one_line_item_title)
 
         init {
             view.setOnClickListener { listener.onActionMenuItemClick(adapterPosition) }
