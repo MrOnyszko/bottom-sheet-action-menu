@@ -1,14 +1,16 @@
 package pl.gratitude.bottomsheetactionmenu
 
-import android.content.Context
 import android.os.Bundle
-import android.support.design.widget.BottomSheetDialog
+import android.support.design.widget.BottomSheetDialogFragment
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import kotlinx.android.synthetic.main.bottom_sheet_dialog_menu_action.*
 
-open class ActionMenuBottomSheetDialog<ActionItemId>(context: Context) :
-    BottomSheetDialog(context) {
+open class ActionMenuBottomSheetDialog<ActionItemId> :
+    BottomSheetDialogFragment() {
 
     companion object {
         val EMPTY_LISTENER = object : ActionMenuItemClickListener {
@@ -28,10 +30,16 @@ open class ActionMenuBottomSheetDialog<ActionItemId>(context: Context) :
 
     open var layout: Int = R.layout.bottom_sheet_dialog_menu_action
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(layout)
+    open var title: String? = null
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return inflater.inflate(layout, container, false);
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         setupRecycler()
+        setupTitle()
     }
 
     open fun setupRecycler() {
@@ -39,6 +47,14 @@ open class ActionMenuBottomSheetDialog<ActionItemId>(context: Context) :
         adapter.listener = listener
         menu_action_recycle_view.adapter = adapter
         menu_action_recycle_view.layoutManager = layoutManager
+    }
+
+    open fun setupTitle() {
+        menu_action_header.visibility = View.GONE
+        title?.let {
+            menu_action_header.visibility = View.VISIBLE
+            menu_action_header.text = title
+        }
     }
 
 }

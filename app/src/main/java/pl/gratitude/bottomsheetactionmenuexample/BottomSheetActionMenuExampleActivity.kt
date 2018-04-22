@@ -14,6 +14,7 @@ import pl.gratitude.bottomsheetactionmenu.doIf
 import pl.gratitude.bottomsheetactionmenu.getActionMenuItem
 import pl.gratitude.bottomsheetactionmenu.withCanceledOnTouchOutside
 import pl.gratitude.bottomsheetactionmenu.withListener
+import pl.gratitude.bottomsheetactionmenu.withTitle
 import java.util.*
 
 class BottomSheetActionMenuExampleActivity : AppCompatActivity() {
@@ -33,12 +34,16 @@ class BottomSheetActionMenuExampleActivity : AppCompatActivity() {
 
         val isCloudActionAvailable = Random().nextBoolean()
 
-        ActionMenuBottomSheetDialog<ActionMenuId>(this)
+        ActionMenuBottomSheetDialog<ActionMenuId>()
             .withCanceledOnTouchOutside(true)
+            .withTitle("ActionMenuBottomSheetDialog")
             .doIf(isCloudActionAvailable) {
                 addAction(
                     ActionMenuId.CLOUD,
-                    ContextCompat.getDrawable(this.context, R.drawable.ic_cloud_black_24dp),
+                    ContextCompat.getDrawable(
+                        this@BottomSheetActionMenuExampleActivity,
+                        R.drawable.ic_cloud_black_24dp
+                    ),
                     "Cloud"
                 )
             }
@@ -56,8 +61,9 @@ class BottomSheetActionMenuExampleActivity : AppCompatActivity() {
             .withListener {
                 val action = getActionMenuItem(it)
                 Toast.makeText(context, "${action.name} ${action.id.name}", Toast.LENGTH_SHORT).show()
+                dismissAllowingStateLoss()
             }
-            .show()
+            .show(supportFragmentManager, "TAG")
     }
 
 }

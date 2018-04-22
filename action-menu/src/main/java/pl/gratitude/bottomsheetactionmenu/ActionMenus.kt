@@ -1,6 +1,8 @@
 package pl.gratitude.bottomsheetactionmenu
 
 import android.graphics.drawable.Drawable
+import android.view.View
+import kotlinx.android.synthetic.main.bottom_sheet_dialog_menu_action.*
 
 fun <ActionItemId> ActionMenuBottomSheetDialog<ActionItemId>.doIf(
     enabled: Boolean,
@@ -49,6 +51,11 @@ fun <ActionItemId> ActionMenuBottomSheetDialog<ActionItemId>.withListener(listen
 }
 
 fun <ActionItemId> ActionMenuBottomSheetDialog<ActionItemId>.withCanceledOnTouchOutside(value: Boolean): ActionMenuBottomSheetDialog<ActionItemId> {
-    this.setCanceledOnTouchOutside(value)
+    this.dialog?.setCanceledOnTouchOutside(value)
+    return this
+}
+
+fun <ActionItemId> ActionMenuBottomSheetDialog<ActionItemId>.withTitle(title: String): ActionMenuBottomSheetDialog<ActionItemId> {
+    this.title = title
     return this
 }
