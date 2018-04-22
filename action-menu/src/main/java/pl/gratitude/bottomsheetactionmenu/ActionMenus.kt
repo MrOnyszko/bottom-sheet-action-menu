@@ -2,37 +2,44 @@ package pl.gratitude.bottomsheetactionmenu
 
 import android.graphics.drawable.Drawable
 
-fun ActionMenuBottomSheetDialog.withAction(action: ActionMenuItem): ActionMenuBottomSheetDialog {
+fun <ActionItemId> ActionMenuBottomSheetDialog<ActionItemId>.doIf(
+    enabled: Boolean,
+    block: ActionMenuBottomSheetDialog<ActionItemId>.() -> ActionMenuBottomSheetDialog<ActionItemId>
+): ActionMenuBottomSheetDialog<ActionItemId> {
+    return if (enabled) block() else this
+}
+
+fun <ActionItemId> ActionMenuBottomSheetDialog<ActionItemId>.addAction(action: ActionMenuItem<ActionItemId>): ActionMenuBottomSheetDialog<ActionItemId> {
     this.actions.add(action)
     return this
 }
 
-fun ActionMenuBottomSheetDialog.withAction(
-    id: Int,
+fun <ActionItemId> ActionMenuBottomSheetDialog<ActionItemId>.addAction(
+    id: ActionItemId,
     drawable: Drawable? = null,
     name: String
-): ActionMenuBottomSheetDialog {
+): ActionMenuBottomSheetDialog<ActionItemId> {
     this.actions.add(ActionMenuItem(id, drawable, name))
     return this
 }
 
-fun ActionMenuBottomSheetDialog.withActions(
-    actions: List<ActionMenuItem>
-): ActionMenuBottomSheetDialog {
-    require(actions.isNotEmpty(), { "Actions list could not be empty" })
+fun <ActionItemId> ActionMenuBottomSheetDialog<ActionItemId>.addActions(
+    actions: List<ActionMenuItem<ActionItemId>>
+): ActionMenuBottomSheetDialog<ActionItemId> {
+    kotlin.require(actions.isNotEmpty(), { "Actions list could not be empty" })
     this.actions.addAll(actions)
     return this
 }
 
-fun ActionMenuBottomSheetDialog.withListener(listener: ActionMenuItemClickListener): ActionMenuBottomSheetDialog {
+fun <ActionItemId> ActionMenuBottomSheetDialog<ActionItemId>.withListener(listener: ActionMenuItemClickListener): ActionMenuBottomSheetDialog<ActionItemId> {
     this.listener = listener
     return this
 }
 
-fun ActionMenuBottomSheetDialog.getActionMenuItem(position: Int): ActionMenuItem =
+fun <ActionItemId> ActionMenuBottomSheetDialog<ActionItemId>.getActionMenuItem(position: Int): ActionMenuItem<ActionItemId> =
     this.adapter.actions[position]
 
-fun ActionMenuBottomSheetDialog.withListener(listener: ActionMenuBottomSheetDialog.(Int) -> Unit): ActionMenuBottomSheetDialog {
+fun <ActionItemId> ActionMenuBottomSheetDialog<ActionItemId>.withListener(listener: ActionMenuBottomSheetDialog<ActionItemId>.(Int) -> Unit): ActionMenuBottomSheetDialog<ActionItemId> {
     this.listener = object : ActionMenuItemClickListener {
         override fun onActionMenuItemClick(position: Int) {
             listener(position)
@@ -41,7 +48,7 @@ fun ActionMenuBottomSheetDialog.withListener(listener: ActionMenuBottomSheetDial
     return this
 }
 
-fun ActionMenuBottomSheetDialog.withCanceledOnTouchOutside(value: Boolean): ActionMenuBottomSheetDialog {
+fun <ActionItemId> ActionMenuBottomSheetDialog<ActionItemId>.withCanceledOnTouchOutside(value: Boolean): ActionMenuBottomSheetDialog<ActionItemId> {
     this.setCanceledOnTouchOutside(value)
     return this
 }

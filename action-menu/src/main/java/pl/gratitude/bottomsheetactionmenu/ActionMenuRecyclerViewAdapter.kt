@@ -8,12 +8,12 @@ import android.widget.ImageView
 import android.widget.TextView
 import kotlinx.android.synthetic.main.recycler_holder_avatar_one_line_item.view.*
 
-open class ActionMenuRecyclerViewAdapter(
+open class ActionMenuRecyclerViewAdapter<ActionItemId>(
     open var layout: Int = R.layout.recycler_holder_avatar_one_line_item,
-    open var actions: List<ActionMenuItem> = emptyList(),
+    open var actions: List<ActionMenuItem<ActionItemId>> = emptyList(),
     open var listener: ActionMenuItemClickListener = ActionMenuBottomSheetDialog.EMPTY_LISTENER
 ) :
-    RecyclerView.Adapter<ActionMenuRecyclerViewAdapter.ActionMenuItemViewHolder>() {
+    RecyclerView.Adapter<ActionMenuRecyclerViewAdapter<ActionItemId>.ActionMenuItemViewHolder>() {
 
     override fun onCreateViewHolder(
         parent: ViewGroup,

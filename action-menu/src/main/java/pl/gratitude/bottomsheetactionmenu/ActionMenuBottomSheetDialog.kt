@@ -7,7 +7,8 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import kotlinx.android.synthetic.main.bottom_sheet_dialog_menu_action.*
 
-open class ActionMenuBottomSheetDialog(context: Context) : BottomSheetDialog(context) {
+open class ActionMenuBottomSheetDialog<ActionItemId>(context: Context) :
+    BottomSheetDialog(context) {
 
     companion object {
         val EMPTY_LISTENER = object : ActionMenuItemClickListener {
@@ -19,9 +20,9 @@ open class ActionMenuBottomSheetDialog(context: Context) : BottomSheetDialog(con
 
     open var listener: ActionMenuItemClickListener = EMPTY_LISTENER
 
-    open var actions: MutableList<ActionMenuItem> = ArrayList()
+    open var actions: MutableList<ActionMenuItem<ActionItemId>> = ArrayList()
 
-    open var adapter: ActionMenuRecyclerViewAdapter = ActionMenuRecyclerViewAdapter()
+    open var adapter: ActionMenuRecyclerViewAdapter<ActionItemId> = ActionMenuRecyclerViewAdapter()
 
     open var layoutManager: RecyclerView.LayoutManager = LinearLayoutManager(context)
 
