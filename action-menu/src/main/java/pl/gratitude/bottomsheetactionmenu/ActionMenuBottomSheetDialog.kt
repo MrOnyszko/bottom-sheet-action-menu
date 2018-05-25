@@ -26,8 +26,6 @@ open class ActionMenuBottomSheetDialog<ActionItemId> :
 
     open var adapter: ActionMenuRecyclerViewAdapter<ActionItemId> = ActionMenuRecyclerViewAdapter()
 
-    open var layoutManager: RecyclerView.LayoutManager = LinearLayoutManager(context)
-
     open var layout: Int = R.layout.bottom_sheet_dialog_menu_action
 
     open var title: String? = null
@@ -52,7 +50,7 @@ open class ActionMenuBottomSheetDialog<ActionItemId> :
         adapter.actions = actions
         adapter.listener = listener
         menuActionRecyclerView.adapter = adapter
-        menuActionRecyclerView.layoutManager = layoutManager
+        menuActionRecyclerView.layoutManager = LinearLayoutManager(context)
     }
 
     open fun setupTitle() {
